@@ -5,7 +5,7 @@
 
 // Load plugins
 var gulp = require('gulp'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
     jshint = require('gulp-jshint'),
@@ -22,8 +22,12 @@ var gulp = require('gulp'),
 
 // Styles
 gulp.task('styles', function() {
-    return sass('src/styles/app.scss', { style: 'expanded' })
-        .pipe(autoprefixer('last 2 version'))
+    return gulp.src('src/styles/app.scss')
+        .pipe(sass({
+            loadPath: [
+
+            ]
+            }).on('error', sass.logError))
         .pipe(gulp.dest('dist/css'))
         .pipe(rename({ suffix: '.min' }))
         .pipe(minifycss())
